@@ -1,0 +1,71 @@
+%table.resource_attributes
+  %tr
+    %th Name
+    %td= @ability.name
+  %tr
+    %th Description
+    %td= @ability.description
+
+
+%h2 Allowed actions
+
+
+
+%table{:class => 'overview'}
+  - @ability.permissions.each do |perm|
+    %tr
+      %td= perm.allowed_action
+
+#abilities_explanation.help_text
+  %p
+    Allowed actions are specified as follows:
+
+  %ul
+    %li
+      %pre
+        posts[index, show]
+      %ul
+        %li
+          Only the things that are explicitly specified are allowed.
+          This declares that on the
+          %tt
+            PostsController
+          only
+          %tt
+            index
+          and
+          %tt
+            show
+          are allowed.
+    %li
+      %pre
+        *[index, show, report]
+      %ul
+        %li
+          We also allow wild-cards. Instead of a controller-name, we could write
+          %tt
+            *
+          which would mean the specified actions would apply to all controllers.
+    %li
+      %pre
+        posts[all]
+      %ul
+        %li
+          If we write
+          %tt
+            all
+          instead of a specific action or list of actions, then all actions are allowed for a given controller.
+          In this case a user has the ability to access all actions inside the posts_controller.
+    %li
+      %pre
+        *[all]
+      %ul
+        %li
+          By extension, this means a user has the ability to access all actions from all controllers.
+  %p
+    When abilities are assigned to operators (authorisation), it is possible to specify the extent of the ability.
+    So an
+    %tt
+      asp_admin
+    's permissions could only be valid on a few asps.
+

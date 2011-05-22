@@ -1,0 +1,15 @@
+
+%table{:class => 'overview'}
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th
+
+  %tbody#groups
+    - @abilities.each do |ab|
+      %tr
+        %td=h ab.name
+        %td=h ab.description
+        %td
+          = link_to 'Show', ab
