@@ -38,18 +38,17 @@ So we have something like
     end
 
 What we want to be able to express is that certain users are
-- blog-admins: they can add authors, and can manage the entirety of the blog
-- authors: they can manage their own posts (which they wrote), and they can manage the comments on their own posts
-- commentators: they can read a blog, and create comments. They can only edit the comments they created
+
+* blog-admins: they can add authors, and can manage the entirety of the blog
+* authors: they can manage their own posts (which they wrote), and they can manage the comments on their own posts
+* commentators: they can read a blog, and create comments. They can only edit the comments they created
 
 This should be expressable in our system ...
 
 Therefore there are two concepts we introduce:
 
-- the extent: which scopes the permission to certain contexts. A context is user-defined, in our case a blog.
+* the extent: which scopes the permission to certain contexts. A context is user-defined, in our case a blog.
   Permissions are only valid on certain blogs.
-- the custom-rule: a rule that, using the context, can programmatically check whether certain conditions are met.
-  In our case: an author can only edit posts he created would be such a check.
 
 ## Installation
 
@@ -72,11 +71,16 @@ a role or permissions for the user). A user (operator, ...) just needs to be abl
 roll your own. The Vigilante needs to know how the user model is called, and it needs to be able to reach the currently
 logged on user.
 
-Therefore, inside the `vigilante_config.yml` you can set the following two values:
+Therefore, inside the `vigilante_config.yml` you can set the following values:
 
 - *current_user_method*: the method that needs to be called from within the controller context to retrieve the current user.
   If you are using Devise, this would be something like `current_<devise-model>`, e.g. `current_user` or `current_operator`.
--   
+- *current_user_class*: the class of the user/operator
+- application_context: what method will give us the current context (e.g. current blog)
+- application_extent_id_from_object : get_context_id_from_context_object
+- application_context_from_nested_resources: find_context_by_context_id
+
+I will give an example later to make this more clear.
 
 
 ### To DO
