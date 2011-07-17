@@ -63,6 +63,8 @@ Then, do `bundle install`, and run the generator:
 This will add a configuration-file (so you edit it) and will add example glue code to the ApplicationController.
 This will also add a number of needed migrations.
 
+
+
 ### What needs to be configured
 
 For starters we need some kind of user-model. You can call it User, Operator, ...
@@ -71,7 +73,15 @@ a role or permissions for the user). A user (operator, ...) just needs to be abl
 roll your own. The Vigilante needs to know how the user model is called, and it needs to be able to reach the currently
 logged on user.
 
-Therefore, inside the `vigilante_config.yml` you can set the following values:
+Inside that class, you have to add a single line:
+
+    authorisations_handled_by_vigilante
+
+This will add extra methods and properties to your User/Operator model.
+
+
+Next up, we need some extra glue code, which is configured inside the `vigilante_config.yml`.
+You will need to set the following values:
 
 - *current_user_method*: the method that needs to be called from within the controller context to retrieve the current user.
   If you are using Devise, this would be something like `current_<devise-model>`, e.g. `current_user` or `current_operator`.
@@ -83,11 +93,10 @@ Therefore, inside the `vigilante_config.yml` you can set the following values:
 I will give an example later to make this more clear.
 
 
+###
+
+
 ### To DO
-
-- --> the operator 'permits' need to be added in a seperate method to the ActiveRecord:
-
-    watched_by_vigilante
 
 - improve documentation
 
