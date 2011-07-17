@@ -1,3 +1,3 @@
 class Author < ActiveRecord::Base
-  watched_by_vigilante
+  authorisations_handled_by_vigilante
 end

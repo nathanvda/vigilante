@@ -78,7 +78,7 @@ describe PermissionHash do
           @ph.get_extent_of('comments', :index).should == ['2']
         end
         it "of homepage index should be correct" do
-          @ph.get_extent_of('/', :index).should == ['1', '*']
+          @ph.get_extent_of('/', :index).should =~ ['1', '*']
         end
       end
 
