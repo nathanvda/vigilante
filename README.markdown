@@ -1,6 +1,8 @@
 # Vigilante
 ========
 
+[![Build Status](http://travis-ci.org/nathanvda/vigilante.png)](http://travis-ci.org/nathanvda/vigilante)
+
 Vigilante is a plugin that will offer database stored authorisation, and offers the ability
 that certain permissions have a limited scope/extent.
 
