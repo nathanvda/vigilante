@@ -21,7 +21,7 @@ module Vigilante
       end
 
       # run this in the model that is the operator or user or ...
-      def watched_by_vigilante
+      def authorisations_handled_by_vigilante
         module_eval do
           include Vigilante::WatchedOperator
         end
