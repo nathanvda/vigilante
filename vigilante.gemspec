@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{vigilante}
+  s.name = "vigilante"
   s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nathan Van der Auwera"]
-  s.date = %q{2011-07-17}
-  s.description = %q{Vigilante is a db-backed authorisation, completely configurable and dynamic; where permissions can be limited to extents.}
-  s.email = %q{nathan@dixis.com}
+  s.date = "2011-10-02"
+  s.description = "Vigilante is a db-backed authorisation, completely configurable and dynamic; where permissions can be limited to extents."
+  s.email = "nathan@dixis.com"
   s.extra_rdoc_files = [
     "README.markdown"
   ]
@@ -114,12 +114,13 @@ Gem::Specification.new do |s|
     "spec/models/permission_hash_spec.rb",
     "spec/models/permission_spec.rb",
     "spec/spec_helper.rb",
-    "spec/vigilante_spec.rb"
+    "spec/vigilante_spec.rb",
+    "vigilante.gemspec"
   ]
-  s.homepage = %q{http://github.com/vigilante}
+  s.homepage = "http://github.com/vigilante"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{Context-based, db-backed authorisation for your rails3 apps}
+  s.rubygems_version = "1.8.10"
+  s.summary = "Context-based, db-backed authorisation for your rails3 apps"
   s.test_files = [
     "spec/controllers/application_controller_spec.rb",
     "spec/controllers/blogs_controller_spec.rb",
@@ -169,18 +170,18 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rails>, ["= 3.0.3"])
+      s.add_runtime_dependency(%q<rails>, [">= 3.0.3"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rspec-rails>, [">= 2.4.0"])
       s.add_development_dependency(%q<rails>, [">= 3.0.0"])
     else
-      s.add_dependency(%q<rails>, ["= 3.0.3"])
+      s.add_dependency(%q<rails>, [">= 3.0.3"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rspec-rails>, [">= 2.4.0"])
       s.add_dependency(%q<rails>, [">= 3.0.0"])
     end
   else
-    s.add_dependency(%q<rails>, ["= 3.0.3"])
+    s.add_dependency(%q<rails>, [">= 3.0.3"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rspec-rails>, [">= 2.4.0"])
     s.add_dependency(%q<rails>, [">= 3.0.0"])

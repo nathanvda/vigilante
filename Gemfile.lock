@@ -35,8 +35,8 @@ GEM
       abstract (>= 1.0.0)
     git (1.2.5)
     i18n (0.5.0)
-    jeweler (1.5.2)
-      bundler (~> 1.0.0)
+    jeweler (1.6.4)
+      bundler (~> 1.0)
       git (>= 1.2.5)
       rake
     mail (2.2.14)
@@ -64,7 +64,7 @@ GEM
       activesupport (= 3.0.3)
       rake (>= 0.8.7)
       thor (~> 0.14.4)
-    rake (0.8.7)
+    rake (0.9.2)
     remarkable (4.0.0.alpha4)
       rspec (>= 2.0.0.alpha11)
     remarkable_activemodel (4.0.0.alpha4)
@@ -98,7 +98,7 @@ PLATFORMS
 
 DEPENDENCIES
   jeweler
-  rails (= 3.0.3)
+  rails (>= 3.0.3)
   remarkable (>= 4.0.0.alpha4)
   remarkable_activemodel (>= 4.0.0.alpha4)
   remarkable_activerecord (>= 4.0.0.alpha4)
