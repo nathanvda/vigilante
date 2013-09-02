@@ -19,7 +19,7 @@ module Vigilante
   #      extent_params[:extent_type] = extent.class.name
   #    end
 
-      new_authorization =  Authorization.create(:operator_id => self.id, :ability_id => ability.id)
+      new_authorization = ::Authorization.create(:operator_id => self.id, :ability_id => ability.id)
       unless extent.nil?
         new_authorization.add_extent(extent)
       end
