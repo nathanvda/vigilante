@@ -2,9 +2,25 @@ module Vigilante
   module Authorization
 
     def self.included(base)
+      current_user_method = VIGILANTE_CONFIG['current_user_method']
+
       base.helper_method :is_allowed_to?
-      base.helper_method :get_current_operator_extent_of
-      base.helper_method :get_current_operator_permissions_are_global?
+      base.helper_method "get_#{current_user_method}_extent_of".to_sym
+      base.helper_method "get_#{current_user_method}_permissions_are_global?".to_sym
+
+      define_method "get_#{current_user_method}_extent_of" do |controller_name, action|
+        get_protectee_permissions.get_extent_of(controller_name, action)
+      end
+
+      # needed? --> tells if the current_operator has only global permissions
+      define_method "get_#{current_user_method}_permissions_are_global?" do
+        get_protectee_permissions.are_only_global?
+      end
+
+      define_method "get_#{current_user_method}_permissions" do
+        get_protectee_permissions
+      end
+
     end
 
     # ******************************************************************
@@ -26,6 +42,19 @@ module Vigilante
       self.send(application_method) if application_method.present?
     end
 
+    # this will return the current user/operator/... that is guarded by vigilante
+    def get_protectee
+      current_user_method = VIGILANTE_CONFIG['current_user_method']
+
+      Rails.logger.debug "current_user_method = #{current_user_method}"
+
+      @protectee ||= self.send(current_user_method) if current_user_method.present?
+
+      Rails.logger.debug "Protectee = #{@protectee.user_name}"
+
+      @protectee
+    end
+
 
     # ******************************************************************
     #  explicitely call the Vigilante filter in each controller that requires Vigilante protection :
@@ -40,7 +69,7 @@ module Vigilante
     def check_permissions(options={})
       logger.debug "CHECK PERMISSIONS"
       # a logged in operator can do ajax-requests
-      return if current_operator.present? && request.xhr?
+      return if get_protectee.present? && request.xhr?
 
       controller_to_check = options[:as].nil? ? controller_name : options[:as]
 
@@ -83,23 +112,14 @@ module Vigilante
     
     def is_allowed_to?(controller_name, action, context=get_current_context_from_application)
       logger.debug "is_allowed_to? #{controller_name.inspect}##{action} [#{context.inspect}]"
-      get_current_operator_permissions.is_allowed_by_context(controller_name, action, get_extent_from_context(context))
+      get_protectee_permissions.is_allowed_by_context(controller_name, action, get_extent_from_context(context))
     end
 
-
-    def get_current_operator_extent_of(controller_name, action)
-      get_current_operator_permissions.get_extent_of(controller_name, action)
-    end
-
-    # needed? --> tells if the current_operator has only global permissions
-    def get_current_operator_permissions_are_global?
-      get_current_operator_permissions.are_only_global?
-    end
-    
-    def get_current_operator_permissions
+    def get_protectee_permissions
       @permits ||= session[:permits]
       if @permits.nil?
-        @permits = current_operator.permits
+        Rails.logger.debug "determine permissions ... "
+        @permits = get_protectee.permits
         session[:permits] = @permits
       end
       @permits
@@ -130,20 +150,20 @@ module Vigilante
 
     # ******************************************************************
 
-    def find_objects
-      handle_context_for_nested_resources
-      model = Kernel.const_get(model_name)
-      objects = model.find_all_by_operator(current_operator, params)
-      instance_variable_set "@#{model_name.underscore.pluralize}", objects
-    end
-
-
-    def find_object
-      handle_context_for_nested_resources
-      model = Kernel.const_get(model_name)
-      object = model.find_by_operator(current_operator, params[:id], params)
-      instance_variable_set "@#{model_name.underscore}", object
-    end
+    #def find_objects
+    #  handle_context_for_nested_resources
+    #  model = Kernel.const_get(model_name)
+    #  objects = model.find_all_by_operator(get_protectee, params)
+    #  instance_variable_set "@#{model_name.underscore.pluralize}", objects
+    #end
+    #
+    #
+    #def find_object
+    #  handle_context_for_nested_resources
+    #  model = Kernel.const_get(model_name)
+    #  object = model.find_by_operator(get_protectee, params[:id], params)
+    #  instance_variable_set "@#{model_name.underscore}", object
+    #end
 
 
     # returns the model-name for this controller
