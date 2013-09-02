@@ -1,0 +1,12 @@
+
+= simple_form_for @ability, :html => {:class => 'form-horizontal' } do |f|
+  = f.input :name
+  = f.input :description
+
+  %h2 Allowed actions
+  #permissions
+    = f.simple_fields_for :ability_permissions do |abp|
+      = render 'ability_permission_fields', :f => abp
+    = link_to_add_association 'add a permission', f, :ability_permissions
+
+  = f.submit

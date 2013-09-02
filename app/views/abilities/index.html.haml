@@ -13,3 +13,5 @@
         %td=h ab.description
         %td
           = link_to 'Show', ab
+
+= link_to 'Create new', new_ability_path, :class => 'btn btn-mini' if is_allowed_to?(Ability, :create)

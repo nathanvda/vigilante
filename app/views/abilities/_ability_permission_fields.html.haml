@@ -1,0 +1,11 @@
+.nested-fields.ability-permission-fields
+
+  .row
+    .span4
+      #permission_from_list
+        = f.association :permission, :collection => Permission.all(:order => 'allowed_action'), :prompt => 'Choose an existing permission', :label_method => :allowed_action
+    .span4
+      #actions-on-permission{:style => 'line-height: 20px; margin-top: 5px;'}
+        - if f.object.new_record?
+          = link_to_add_association 'or create a new permission', f, :permission
+        = link_to_remove_association "remove permission", f
