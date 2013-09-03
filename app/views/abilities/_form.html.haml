@@ -7,6 +7,13 @@
   #permissions
     = f.simple_fields_for :ability_permissions do |abp|
       = render 'ability_permission_fields', :f => abp
-    = link_to_add_association 'add a permission', f, :ability_permissions
 
-  = f.submit
+  .control-group
+    .controls
+      = link_to_add_association 'add a permission', f, :ability_permissions
+
+  .control-group
+    .controls
+      = f.submit "Save", :class=>"btn btn-primary"
+      = link_to "Cancel", abilities_path, :class => 'btn'
+

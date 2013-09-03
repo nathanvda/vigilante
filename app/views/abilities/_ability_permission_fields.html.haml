@@ -1,6 +1,6 @@
 .nested-fields.ability-permission-fields
 
-  .row
+  .row-fluid
     .span4
       #permission_from_list
         = f.association :permission, :collection => Permission.all(:order => 'allowed_action'), :prompt => 'Choose an existing permission', :label_method => :allowed_action
