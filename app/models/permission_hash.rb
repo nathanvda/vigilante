@@ -7,7 +7,12 @@ class PermissionHash < HashWithIndifferentAccess
 
   # default initialization
   def initialize(default_start = DEFAULT_PERMISSIONS)
-    super( default_start )
+    new_start = HashWithIndifferentAccess.new
+    #deep clone the default_start to not change it
+    default_start.each do |key, val|
+      new_start[key] = val.clone
+    end
+    super( new_start )
   end
 
   # add extra allowed actions
