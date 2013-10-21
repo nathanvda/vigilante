@@ -89,7 +89,6 @@ class PermissionHash < HashWithIndifferentAccess
 
     def get_permissions_by_context(extents)
       # start from the empty permissions
-      Rails.logger.debug "get_permissions_by_context received #{extents.inspect}"
       result = {}
       # add specific extents
       unless extents.nil? || self.is_global?
@@ -99,13 +98,10 @@ class PermissionHash < HashWithIndifferentAccess
           result.merge!(permissions_for_ctx) unless permissions_for_ctx.nil?
         end
       end
-      Rails.logger.debug "get_permissions_by_context after extents built #{result.inspect}"
 
       # add general extent only if we have nothing specific
       result = {}.merge(self['*']) if result == {}
       
-      Rails.logger.debug "get_permissions_by_context built #{result.inspect}"
-
       result
     end
 
@@ -129,8 +125,4 @@ class PermissionHash < HashWithIndifferentAccess
       result
     end
 
-
-
-  
-  
 end
