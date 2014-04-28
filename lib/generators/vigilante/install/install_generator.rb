@@ -97,6 +97,8 @@ CODE
         migration_template "create_ability_permissions.rb",   "db/migrate/create_ability_permissions.rb"
         migration_template "create_authorizations.rb",        "db/migrate/create_authorizations.rb"
         migration_template "create_authorization_extents.rb", "db/migrate/create_authorization_extents.rb"
+        migration_template "add_extent_flag_to_ability.rb",   "db/migrate/add_extent_flag_to_ability.rb"
+        migration_template "add_importance_to_abilities.rb",  "db/migrate/add_importance_to_abilities.rb"
       end
 
     end
