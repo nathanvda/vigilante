@@ -121,6 +121,8 @@ module Vigilante
         Rails.logger.debug "determine permissions ... "
         @permits = get_protectee.permits
         session[:permits] = @permits
+      elsif @permits.class.name != "PermissionHash"
+        @permits = PermissionHash.new(@permits)
       end
       @permits
     end
