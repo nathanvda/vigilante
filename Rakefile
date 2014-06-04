@@ -7,7 +7,7 @@ rescue LoadError
 end
 
 require 'rake'
-require 'rake/rdoctask'
+require 'rdoc/task'
 
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
@@ -39,10 +39,5 @@ end
 require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
 
-desc  "Run all specs with rcov"
-RSpec::Core::RakeTask.new("test_cov") do |t|
-  t.rcov = true
-  t.rcov_opts = %w{--rails --include views -Ispec --exclude gems\/,spec\/,features\/,seeds\/}
-end
 
 task :default => :spec
