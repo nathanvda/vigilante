@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Nathan Van der Auwera"]
-  s.date = "2014-06-04"
+  s.date = "2015-06-09"
   s.description = "Vigilante is a db-backed authorisation, completely configurable and dynamic; where permissions can be limited to extents."
   s.email = "nathan@dixis.com"
   s.extra_rdoc_files = [
@@ -51,6 +51,8 @@ Gem::Specification.new do |s|
     "lib/db/migrate/20101129084620_remove_extent_from_authorization.rb",
     "lib/db/migrate/20130829160700_add_importance_to_abilities.rb",
     "lib/generators/vigilante/install/install_generator.rb",
+    "lib/generators/vigilante/install/templates/add_extent_flag_to_ability.rb",
+    "lib/generators/vigilante/install/templates/add_importance_to_abilities.rb",
     "lib/generators/vigilante/install/templates/create_abilities.rb",
     "lib/generators/vigilante/install/templates/create_ability_permissions.rb",
     "lib/generators/vigilante/install/templates/create_authorization_extents.rb",
@@ -126,7 +128,7 @@ Gem::Specification.new do |s|
     "vigilante.gemspec"
   ]
   s.homepage = "http://github.com/vigilante"
-  s.rubygems_version = "2.2.1"
+  s.rubygems_version = "2.4.5"
   s.summary = "Context-based, db-backed authorisation for your rails3 apps"
 
   if s.respond_to? :specification_version then
