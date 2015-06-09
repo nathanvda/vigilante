@@ -1,20 +1,18 @@
 source "http://rubygems.org"
 
-gem "rails", ">= 3.0.3"
+gem "rails", ">= 4.0.0"
 
 group :development, :test do
   gem "jeweler"
-  gem "rspec-rails", ">= 2.4.0"
+  gem "rspec-rails", "~> 2.14.0"
 end
 
 
 # test-environment gems
 group :test, :spec, :cucumber do
-  gem 'sqlite3-ruby', :require => 'sqlite3'  # needed for the rails-3-app : not really needed, but not sure how to avoid it
-  gem "rspec",                   ">= 2.4.0"
-  gem "remarkable",              ">=4.0.0.alpha4"
-  gem "remarkable_activemodel",  ">=4.0.0.alpha4"
-  gem "remarkable_activerecord", ">=4.0.0.alpha4"
+  gem 'sqlite3'
+  gem "rspec",                   "~> 2.14.0"
+  gem "shoulda-matchers"
 #  gem "capybara"
 #  gem "cucumber"
 #  gem "database_cleaner"

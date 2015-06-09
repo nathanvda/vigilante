@@ -14,7 +14,7 @@ end
 
 
 describe Authorization do
-  it {should belong_to :operator, :class_name => ::VIGILANTE_CONFIG['current_user_class']}
+  it {should belong_to(:operator).class_name(::VIGILANTE_CONFIG['current_user_class'])}
   it {should belong_to :ability}
   it {should have_many :authorization_extents}
 

@@ -1,9 +1,6 @@
-require 'rails/generators/migration'
-
 module Vigilante
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
-      include Rails::Generators::Migration
       source_root File.expand_path('../templates', __FILE__)
       desc "This generator installs the default config file, and glue code into application-controller; which you can edit"
 
@@ -81,26 +78,6 @@ module Vigilante
 CODE
         end
       end
-
-      def self.next_migration_number(path)
-        unless @prev_migration_nr
-          @prev_migration_nr = Time.now.utc.strftime("%Y%m%d%H%M%S").to_i
-        else
-          @prev_migration_nr += 1
-        end
-        @prev_migration_nr.to_s
-      end
-
-      def copy_migrations
-        migration_template "create_permissions.rb",           "db/migrate/create_permissions.rb"
-        migration_template "create_abilities.rb",             "db/migrate/create_abilities.rb"
-        migration_template "create_ability_permissions.rb",   "db/migrate/create_ability_permissions.rb"
-        migration_template "create_authorizations.rb",        "db/migrate/create_authorizations.rb"
-        migration_template "create_authorization_extents.rb", "db/migrate/create_authorization_extents.rb"
-        migration_template "add_extent_flag_to_ability.rb",   "db/migrate/add_extent_flag_to_ability.rb"
-        migration_template "add_importance_to_abilities.rb",  "db/migrate/add_importance_to_abilities.rb"
-      end
-
     end
   end
 end
