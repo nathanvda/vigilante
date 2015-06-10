@@ -6,7 +6,7 @@ module Vigilante
       base.has_many :abilities, :through => :authorizations
 
       base.accepts_nested_attributes_for :authorizations, :reject_if => proc {|x| x[:ability_id].blank?}, :allow_destroy => true
-      base.attr_accessible :authorizations_attributes
+      base.attr_accessible :authorizations_attributes if base.respond_to?(:attr_accessible)
     end
 
     def add_authorization(role, extent=nil)

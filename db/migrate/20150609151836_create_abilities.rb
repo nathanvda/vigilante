@@ -1,14 +1,12 @@
 class CreateAbilities < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :abilities do |t|
       t.string  :name
       t.string  :description
-      t.boolean :needs_extent      
-      t.timestamps
-    end
-  end
+      t.boolean :needs_extent
+      t.integer :importance
 
-  def self.down
-    drop_table :abilities
+      t.timestamps null: false
+    end
   end
 end

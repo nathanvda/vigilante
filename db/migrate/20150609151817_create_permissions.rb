@@ -1,13 +1,9 @@
 class CreatePermissions < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :permissions do |t|
       t.string :allowed_action
 
-      t.timestamps
+      t.timestamps null: false
     end
-  end
-
-  def self.down
-    drop_table :permissions
   end
 end

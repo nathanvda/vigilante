@@ -42,22 +42,7 @@ Gem::Specification.new do |s|
     "app/views/abilities/new.html.haml",
     "app/views/abilities/show.html.haml",
     "lib/config/vigilante_config.yml",
-    "lib/db/migrate/20101028091755_create_permissions.rb",
-    "lib/db/migrate/20101028091859_create_abilities.rb",
-    "lib/db/migrate/20101028091927_create_ability_permissions.rb",
-    "lib/db/migrate/20101028092014_create_authorizations.rb",
-    "lib/db/migrate/20101124131334_add_extent_flag_to_ability.rb",
-    "lib/db/migrate/20101129084538_add_authorization_extent.rb",
-    "lib/db/migrate/20101129084620_remove_extent_from_authorization.rb",
-    "lib/db/migrate/20130829160700_add_importance_to_abilities.rb",
     "lib/generators/vigilante/install/install_generator.rb",
-    "lib/generators/vigilante/install/templates/add_extent_flag_to_ability.rb",
-    "lib/generators/vigilante/install/templates/add_importance_to_abilities.rb",
-    "lib/generators/vigilante/install/templates/create_abilities.rb",
-    "lib/generators/vigilante/install/templates/create_ability_permissions.rb",
-    "lib/generators/vigilante/install/templates/create_authorization_extents.rb",
-    "lib/generators/vigilante/install/templates/create_authorizations.rb",
-    "lib/generators/vigilante/install/templates/create_permissions.rb",
     "lib/generators/vigilante/install/templates/vigilante_config.yml",
     "lib/vigilante.rb",
     "lib/vigilante/active_record_extensions.rb",
@@ -135,18 +120,18 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rails>, [">= 3.0.3"])
+      s.add_runtime_dependency(%q<rails>, [">= 4.0.0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
-      s.add_development_dependency(%q<rspec-rails>, [">= 2.4.0"])
+      s.add_development_dependency(%q<rspec-rails>, ["~> 2.14.0"])
     else
-      s.add_dependency(%q<rails>, [">= 3.0.3"])
+      s.add_dependency(%q<rails>, [">= 4.0.0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<rspec-rails>, [">= 2.4.0"])
+      s.add_dependency(%q<rspec-rails>, ["~> 2.14.0"])
     end
   else
-    s.add_dependency(%q<rails>, [">= 3.0.3"])
+    s.add_dependency(%q<rails>, [">= 4.0.0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<rspec-rails>, [">= 2.4.0"])
+    s.add_dependency(%q<rspec-rails>, ["~> 2.14.0"])
   end
 end
 
