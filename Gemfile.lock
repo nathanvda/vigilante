@@ -158,3 +158,6 @@ DEPENDENCIES
   rspec-rails (~> 2.14.0)
   shoulda-matchers
   sqlite3
+
+BUNDLED WITH
+   1.10.3
