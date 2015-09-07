@@ -2,14 +2,14 @@ module Vigilante
   module FinderHelper
 
     def self.included(base)
-#      puts "Vigilante::FinderHelper is being included in #{base.name}"
+      # puts "Vigilante::FinderHelper is being included in #{base.name}"
       base.extend ClassMethods
     end
 
     module ClassMethods
 
-      def operator_extent(operator)
-        extent = operator.permits.get_extent_of(self.name.underscore.pluralize, :show)
+      def accessible_extent(user)
+        extent = user.permits.get_extent_of(self.name.underscore.pluralize, :show)
         if extent.include?('*')
           nil
         else
