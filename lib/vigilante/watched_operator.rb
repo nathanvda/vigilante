@@ -74,6 +74,21 @@ module Vigilante
       authorizations.collect {|a| a.ability.try(:name) + "[" + a.authorization_extents.collect{|e| e.extent}.join(',') + "]"}
     end
 
+    def max_ability(extent=nil)
+      if extent && has_extent?
+        result_max = 0
+        self.reload.authorizations.each do |auth|
+          if auth.has_extent?
+            result_max = auth.ability.importance if auth.match_extent(extent) && auth.ability.importance > result_max
+          end
+        end
+        result_max
+      else
+        @max_importance ||= abilities.maximum(:importance)
+      end
+    end
+
+
     #### Extent-specific
 
     def add_to_extent(extent, role = nil)
@@ -93,12 +108,83 @@ module Vigilante
     end
 
     def has_extent?
-      asp_roles.count >= 1
+      extent_roles.count >= 1
     end
 
     def extent_roles
       self.authorizations.select{|x| x.has_extent? }.collect{|x| x.ability.name }
     end
+
+    def extents_with_roles
+      extent_hash = Hash.new { |h, k| h[k] = [] }
+      self.authorizations.each do |authorization|
+        if authorization.has_extent?
+          authorization.authorization_extents.each do |x|
+            extent_hash[x.extent_objid] << authorization.ability.name
+          end
+        else
+          extent_hash[:all] << authorization.ability.name
+        end
+      end
+      extent_hash
+    end
+
+
+    def validate_authorizations(max_allowed_importance, only_with_extents)
+      authorizations = self.authorizations
+
+      authorizations.each do |auth|
+        ability = auth.ability
+
+        if ability.needs_extent? && auth.authorization_extents.empty?
+          errors.add(:authorizations, "ability #{ability.name} requires an organisation!")
+        end
+        if ability.importance > max_allowed_importance || (!ability.needs_extent? && only_with_extents)
+          errors.add(:authorizations, "you do not have the necessary permission to add ability #{ability.name}")
+        end
+      end
+
+      logger.debug "###### Validate_operator_authorizations: authorizations = #{authorizations.inspect}"
+      logger.debug "###### Validate_operator_authorizations: authorizations = #{abilities.inspect}"
+
+      if authorizations.empty?
+        valid? # add the other errors, if any
+        errors.add(:authorizations, 'must have at least one ability')
+      end
+    end
+
+
+    def simplify_authorizations
+      if authorizations.count != distinct_authorizations.count
+        minimize_authorizations
+        self.reload
+      end
+    end
+
+    def distinct_authorizations
+      authorizations.joins(:ability).select('distinct(name)')
+    end
+
+    def authorizations_by_ability_name(ability_name)
+      #TODO: this can be written with better perfomance by using an SQL select instead of the ruby method select
+      authorizations.select{|authorization|authorization.ability.name == ability_name}
+    end
+
+    def minimize_authorizations
+      distinct_authorizations.each do |ability|
+        authorizations_with_possible_duplicates = authorizations_by_ability_name(ability.name)
+        if authorizations_with_possible_duplicates.size > 1
+          keep_auth = authorizations_with_possible_duplicates.delete_at(0)
+          authorizations_with_possible_duplicates.each do |dup_auth|
+            dup_auth.authorization_extents.each do |auth_ext|
+              keep_auth.authorization_extents.create(:extent_objid => auth_ext.extent_objid, :extent_type => auth_ext.extent_type)
+            end
+            dup_auth.destroy
+          end
+        end
+      end
+    end
+
 
 
     #### Permits: what is an user/operator/... allowed to do
