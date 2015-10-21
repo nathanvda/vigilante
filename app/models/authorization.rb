@@ -3,7 +3,7 @@ class Authorization < ActiveRecord::Base
   belongs_to :ability
 
   has_many :authorization_extents, :dependent => :delete_all
-  accepts_nested_attributes_for :authorization_extents, :reject_if => proc { |x| x[:extent].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :authorization_extents, :reject_if => proc { |x| x[:extent].blank? && x[:extent_objid].blank? }, :allow_destroy => true
 
 
   def match_extent(extent_object)
