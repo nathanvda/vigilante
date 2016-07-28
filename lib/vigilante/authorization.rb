@@ -50,7 +50,7 @@ module Vigilante
 
       @protectee ||= self.send(current_user_method) if current_user_method.present?
 
-      Rails.logger.debug "Protectee = #{@protectee.user_name}"
+      Rails.logger.debug "Protectee = #{@protectee.present? ? @protectee.to_s : 'NONE'}"
 
       @protectee
     end
@@ -119,7 +119,11 @@ module Vigilante
       @permits ||= session[:permits]
       if @permits.nil?
         Rails.logger.debug "determine permissions ... "
-        @permits = get_protectee.permits
+        @permits = if get_protectee
+                     get_protectee.permits
+                   else
+                     PermissionHash::DEFAULT_PERMISSIONS
+                   end
         session[:permits] = @permits
       elsif @permits.class.name != "PermissionHash"
         @permits = PermissionHash.new(@permits)
