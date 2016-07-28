@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Nathan Van der Auwera"]
-  s.date = "2015-10-21"
+  s.date = "2016-07-28"
   s.description = "Vigilante is a db-backed authorisation, completely configurable and dynamic; where permissions can be limited to extents."
   s.email = "nathan@dixis.com"
   s.extra_rdoc_files = [
