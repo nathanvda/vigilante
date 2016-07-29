@@ -122,7 +122,7 @@ module Vigilante
         @permits = if get_protectee
                      get_protectee.permits
                    else
-                     PermissionHash::DEFAULT_PERMISSIONS
+                     PermissionHash.default
                    end
         session[:permits] = @permits
       elsif @permits.class.name != "PermissionHash"

@@ -5,6 +5,10 @@ class PermissionHash < HashWithIndifferentAccess
       }
     })
 
+  def self.default
+    PermissionHash.new(DEFAULT_PERMISSIONS)
+  end
+
   # default initialization
   def initialize(default_start = DEFAULT_PERMISSIONS)
     new_start = HashWithIndifferentAccess.new
