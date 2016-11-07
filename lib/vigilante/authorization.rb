@@ -111,7 +111,7 @@ module Vigilante
     # ******************************************************************
     
     def is_allowed_to?(controller_name, action, context=get_current_context_from_application)
-      logger.debug "is_allowed_to? #{controller_name.inspect}##{action} [#{context.inspect}]"
+      logger.debug "is_allowed_to? #{controller_name.inspect[0..50]}##{action} [#{context.inspect}]"
       get_protectee_permissions.is_allowed_by_context(controller_name, action, get_extent_from_context(context))
     end
 
