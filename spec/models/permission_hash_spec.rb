@@ -66,6 +66,20 @@ describe PermissionHash do
       it "can visit posts index in context 1" do
         @ph.is_allowed_by_context('posts', :index, ['1']).should be_true
       end
+      describe "alternative writing styles" do
+        it "can visit :post index in context 1" do
+          @ph.is_allowed_by_context(:post, :index, ['1']).should be_true
+        end
+        it "can visit :post index in context 1" do
+          @ph.is_allowed_by_context(Post, :index, ['1']).should be_true
+        end
+        it "can visit :post index in context 1" do
+          @ph.is_allowed_by_context(:posts, :index, ['1']).should be_true
+        end
+        it "cannot visit 'post' index in context 1 --strings are not transformed" do
+          @ph.is_allowed_by_context('post', :index, ['1']).should be_false
+        end
+      end
       it "cannot visit posts index without context" do
         @ph.is_allowed_by_context('posts', :index, nil).should be_false
       end

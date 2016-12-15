@@ -85,9 +85,13 @@ class PermissionHash < HashWithIndifferentAccess
 
 
     def to_controller_name(klass)
-      klass_str = klass.is_a?(Class) ? klass.name :
-                  klass.is_a?(String) ? klass :
-                  klass.class.name
+      klass_str = if klass.is_a?(Class)
+                    klass.name
+                  elsif klass.is_a?(String) || klass.is_a?(Symbol)
+                    klass.to_s
+                  else
+                    klass.class.name
+                  end
       "#{klass_str.underscore.pluralize}"
     end
 
@@ -113,6 +117,7 @@ class PermissionHash < HashWithIndifferentAccess
       action = action || 'index'
       action = action.to_sym
       controller_name = 'homepage' if controller_name == '/'
+      controller_name = controller_name.underscore
       controller_name = controller_name[1..-1] if controller_name.starts_with?('/')
 
       p = ''
