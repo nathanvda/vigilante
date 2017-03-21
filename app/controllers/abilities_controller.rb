@@ -15,7 +15,7 @@ class AbilitiesController < ApplicationController
   end
 
   def create
-    @ability = Ability.new(params[:ability])
+    @ability = Ability.new(ability_params)
     if @ability.save
       flash[:notice] = t('ability.created')
       redirect_to :action => :index
@@ -32,7 +32,7 @@ class AbilitiesController < ApplicationController
   def update
     @ability = Ability.find(params[:id])
 
-    if @ability.update_attributes(params[:ability])
+    if @ability.update_attributes(ability_params)
       flash[:notice] = t('ability.saved')
       redirect_to :action => :index
     else
@@ -40,7 +40,15 @@ class AbilitiesController < ApplicationController
     end
   end
 
-private
+  protected
+
+  def ability_params
+    params.require(:ability).permit(:name, :description,
+      :ability_permissions_attributes => [:id, :permission_id, :_destroy,
+                                          :permission_attributes => [:id, :allowed_action, :_destroy]
+                                         ]
+    )
+  end
 
 
 end
