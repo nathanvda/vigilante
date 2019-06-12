@@ -10,7 +10,7 @@ module Vigilante
     end
 
     def add_authorization(role, extent=nil)
-      ability = Ability.where("lower(name) = '#{role.downcase}'")
+      ability = Ability.where("lower(name) = '#{role.downcase}'").first
       raise StandardError.new("Role #{role} is not converted to a corresponding authorization. It does not exist.") if ability.nil?
 
   #    extent_params = {}
