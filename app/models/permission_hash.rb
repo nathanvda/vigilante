@@ -25,8 +25,13 @@ class PermissionHash < HashWithIndifferentAccess
     self[extent][path] ||= {}
 
     allowed_actions = [:index, :show] if allowed_actions.nil? || allowed_actions.empty?
+    # always allow edit/update and create/new as a pair (allowing one immediately allows the other)
     allowed_actions.push(:update) if allowed_actions.include?(:edit) && !allowed_actions.include?(:update)
+    allowed_actions.push(:edit) if allowed_actions.include?(:update) && !allowed_actions.include?(:edit)
     allowed_actions.push(:create) if allowed_actions.include?(:new) && !allowed_actions.include?(:create)
+    allowed_actions.push(:new) if allowed_actions.include?(:create) && !allowed_actions.include?(:new)
+    allowed_actions.push(:destroy) if allowed_actions.include?(:delete) && !allowed_actions.include?(:destroy)
+    allowed_actions.push(:delete) if allowed_actions.include?(:destroy) && !allowed_actions.include?(:delete)
 
     allowed_actions.each do |a|
       self[extent][path][a] = 1
