@@ -13,12 +13,6 @@ module Vigilante
       ability = Ability.where("lower(name) = '#{role.downcase}'").first
       raise StandardError.new("Role #{role} is not converted to a corresponding authorization. It does not exist.") if ability.nil?
 
-  #    extent_params = {}
-  #    unless extent.nil?
-  #      extent_params[:extent] = extent.id
-  #      extent_params[:extent_type] = extent.class.name
-  #    end
-
       new_authorization = ::Authorization.create(:operator_id => self.id, :ability_id => ability.id)
       unless extent.nil?
         new_authorization.add_extent(extent)
