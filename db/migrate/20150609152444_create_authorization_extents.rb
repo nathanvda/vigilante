@@ -1,4 +1,4 @@
-class CreateAuthorizationExtents < ActiveRecord::Migration
+class CreateAuthorizationExtents < ActiveRecord::Migration[4.2]
   def change
     create_table :authorization_extents do |t|
       t.references :authorization
