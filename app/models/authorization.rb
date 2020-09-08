@@ -1,5 +1,5 @@
 class Authorization < ActiveRecord::Base
-  belongs_to :operator, :class_name => ::VIGILANTE_CONFIG['current_user_class'].to_s
+  belongs_to :operator, :class_name => ::VIGILANTE_CONFIG['current_user_class'].to_s, inverse_of: :authorizations, optional: true
   belongs_to :ability
 
   has_many :authorization_extents, :dependent => :delete_all
